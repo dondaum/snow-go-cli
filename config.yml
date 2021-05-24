@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+database:
+  dbname: EDW_DB_PROD
+  dbuser: "dbuser"
+  dbpassword: "dbpassword"
+
+Type: "Snowflake"
