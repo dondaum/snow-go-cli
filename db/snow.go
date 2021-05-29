@@ -30,7 +30,7 @@ func TestSnowConn() {
 			tn := fmt.Sprintf("thread-%d", j)
 			fmt.Println(tn)
 			start := time.Now()
-			read(db)
+			simulate(db)
 			fmt.Println(tn, ":", time.Since(start))
 			done <- true
 		}(i)
@@ -43,11 +43,13 @@ func TestSnowConn() {
 	defer db.Close()
 }
 
-func read(db *sql.DB) {
+func simulate(db *sql.DB) (*sql.Rows, error) {
 	rows, err := db.Query("SELECT system$wait(10);")
 	if err != nil {
 		log.Fatal(err)
+		return nil, err
 	}
-	fmt.Println(rows)
 	defer rows.Close()
+	fmt.Println(rows)
+	return rows, nil
 }
